@@ -42,3 +42,21 @@ class FloatSpawner:
     def start(self):
         """开始生成"""
         self.spawn_float()
+    
+    def close_all(self):
+        """关闭所有漂浮文字窗口"""
+        # 停止生成新文字
+        self.paused = True
+        
+        # 关闭所有已显示的窗口
+        for float_text in self.active_floats:
+            try:
+                if float_text.isVisible():
+                    # 使用强制关闭，立即关闭窗口
+                    if hasattr(float_text, 'force_close'):
+                        float_text.force_close()
+                    else:
+                        float_text.close()
+            except:
+                pass
+        self.active_floats.clear()

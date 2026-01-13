@@ -1,3 +1,4 @@
 PyQt6>=6.0.0
-keyboard>=0.13.5
-mouse>=0.7.1
+
+# 开发依赖（用于打包）
+# pyinstaller>=5.0.0

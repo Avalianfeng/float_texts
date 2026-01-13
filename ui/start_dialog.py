@@ -33,15 +33,12 @@ class StartDialog(QWidget):
         text.setReadOnly(True)
         text.setFont(QFont(FONT_NAME, 12))
         text.setText(
-            "This is a gentle desktop companion tool.\n\n"
-            "它会在你忙碌或安静的时候，\n"
-            "轻轻出现一些话。\n\n"
-            "你可以随时按 Alt + S 退出。\n\n"
-            "希望它不会打扰你。"
+            "This is a simple desktop reminder tool.\n\n"
+            "After clicking Start, floating text will be displayed on the desktop.\n\n"
+            "Close the console window to exit the program."
         )
-        
         # 开始按钮
-        start_btn = QPushButton("开始")
+        start_btn = QPushButton("Start Floating Text")
         start_btn.setFont(QFont(FONT_NAME, 12))
         start_btn.clicked.connect(self.start)
         

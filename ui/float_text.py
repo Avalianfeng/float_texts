@@ -113,3 +113,15 @@ class FloatText(QWidget):
         self.anim_out.setEndValue(0)
         self.anim_out.finished.connect(self.close)
         self.anim_out.start()
+    
+    def force_close(self):
+        """强制立即关闭窗口"""
+        # 停止所有定时器和动画
+        if hasattr(self, 'timer'):
+            self.timer.stop()
+        if hasattr(self, 'anim_in'):
+            self.anim_in.stop()
+        if hasattr(self, 'anim_out'):
+            self.anim_out.stop()
+        # 立即关闭
+        self.close()

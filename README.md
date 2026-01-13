@@ -1,15 +1,13 @@
 # Float Words - 漂浮文字桌面伴侣
 
-一个优雅的桌面提醒工具，会在你空闲时显示温馨的文字提醒。
+一个简单的桌面提醒工具，在桌面上显示优雅的漂浮文字。
 
 ## 功能特性
 
 - 🌸 优雅的漂浮文字动画
 - 🌙 自动夜间模式切换
-- 💤 智能空闲检测
 - 🎨 多种颜色主题
-- 🔔 系统托盘支持
-- ⌨️ 全局热键控制
+- 💻 控制台窗口控制
 
 ## 项目结构
 
@@ -23,11 +21,9 @@ float_words/
 │   └── texts.txt       # 文本内容文件
 ├── ui/                 # UI组件
 │   ├── float_text.py   # 漂浮文字窗口
-│   ├── start_dialog.py # 启动对话框
-│   └── tray.py         # 系统托盘
+│   └── start_dialog.py # 启动对话框
 ├── core/               # 核心逻辑
 │   ├── spawner.py      # 文字生成器
-│   ├── idle_detector.py # 空闲检测
 │   └── hotkey.py       # 热键管理
 └── utils/              # 工具模块
     ├── theme.py        # 主题管理
@@ -51,10 +47,7 @@ python main.py
 
 ### 控制方式
 
-- **系统托盘菜单**：右键点击系统托盘图标
-  - 暂停/继续：暂停或恢复文字显示
-  - 退出：退出程序
-- **全局热键**：按 `Alt + S` 退出程序
+- **退出程序**：关闭控制台窗口即可退出程序，所有漂浮文字会自动关闭
 
 ## 配置说明
 
@@ -66,7 +59,6 @@ python main.py
 - `LIFETIME`: 文字显示时长（毫秒）
 - `SPAWN_INTERVAL`: 生成间隔（毫秒）
 - `FLOAT_SPEED`: 漂浮速度（毫秒）
-- `IDLE_THRESHOLD`: 空闲检测阈值（秒）
 
 ## 文本内容
 
@@ -74,17 +66,70 @@ python main.py
 
 ## 工作原理
 
-1. **空闲检测**：程序会检测鼠标和键盘活动，当用户空闲超过设定时间后，开始显示文字
-2. **智能暂停**：当用户重新活动时，自动暂停显示
-3. **主题切换**：根据时间自动切换日间/夜间主题（19:00-7:00为夜间模式）
+1. **启动**：运行程序后，点击"开始"按钮即可开始显示漂浮文字
+2. **主题切换**：根据时间自动切换日间/夜间主题（19:00-7:00为夜间模式）
 
 ## 依赖说明
 
 - **PyQt6**: GUI框架
-- **keyboard**: 全局热键支持
-- **mouse**: 鼠标活动检测
+
+## 打包为可执行文件
+
+### Windows
+
+1. 安装 PyInstaller：
+```bash
+pip install pyinstaller
+```
+
+2. 运行打包脚本：
+```bash
+build.bat
+```
+
+或者手动打包：
+```bash
+pyinstaller build_exe.spec
+```
+
+打包完成后，可执行文件位于 `dist/FloatWords.exe`
+
+### Linux/Mac
+
+1. 安装 PyInstaller：
+```bash
+pip3 install pyinstaller
+```
+
+2. 运行打包脚本：
+```bash
+chmod +x build.sh
+./build.sh
+```
+
+或者手动打包：
+```bash
+pyinstaller build_exe.spec
+```
+
+打包完成后，可执行文件位于 `dist/FloatWords`
+
+### 打包说明
+
+- 打包脚本会自动包含所有必要的模块和数据文件
+- `data/texts.txt` 会被自动包含在可执行文件中
+- 打包后的程序是单文件可执行程序，无需安装Python环境
+- 首次运行可能需要几秒钟启动时间
+- 如果被杀毒软件拦截，请添加信任
+
+### 自定义打包选项
+
+可以编辑 `build_exe.spec` 文件来自定义打包选项：
+
+- `console=True`: 显示控制台窗口
+- `icon=None`: 可以指定图标文件路径（需要.ico格式）
+- `name='FloatWords'`: 可执行文件名称
 
 ## 许可证
 
 本项目仅供学习和个人使用。
-# float_texts

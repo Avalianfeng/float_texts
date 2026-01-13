@@ -2,12 +2,11 @@
 主程序入口
 """
 import sys
+import atexit
+import signal
 from PyQt6.QtWidgets import QApplication
 from ui.start_dialog import StartDialog
-from ui.tray import TrayIcon
 from core.spawner import FloatSpawner
-from core.idle_detector import IdleDetector
-from core.hotkey import HotkeyManager
 
 
 class FloatWordsApp:
@@ -16,45 +15,28 @@ class FloatWordsApp:
     def __init__(self):
         self.app = QApplication(sys.argv)
         self.spawner = FloatSpawner()
-        self.tray = None
-        self.idle_detector = None
-        self.hotkey_manager = None
+        # 注册退出时的清理函数
+        atexit.register(self.cleanup)
+        # 注册信号处理（用于处理控制台关闭）
+        if sys.platform == 'win32':
+            signal.signal(signal.SIGTERM, self._signal_handler)
+            signal.signal(signal.SIGINT, self._signal_handler)
     
-    def setup_tray(self):
-        """设置系统托盘"""
-        self.tray = TrayIcon(
-            app=self.app,
-            pause_callback=self.on_pause_changed,
-            exit_callback=self.app.quit
-        )
+    def _signal_handler(self, signum, frame):
+        """信号处理器"""
+        self.cleanup()
+        sys.exit(0)
     
-    def setup_hotkey(self):
-        """设置全局热键"""
-        self.hotkey_manager = HotkeyManager(exit_callback=self.app.quit)
-        self.hotkey_manager.start()
-    
-    def setup_idle_detector(self):
-        """设置空闲检测"""
-        self.idle_detector = IdleDetector(on_idle_change=self.on_idle_changed)
-        self.idle_detector.start()
-    
-    def on_pause_changed(self, paused):
-        """暂停状态改变回调"""
-        self.spawner.set_paused(paused)
-    
-    def on_idle_changed(self, is_idle):
-        """空闲状态改变回调"""
-        # 空闲时允许生成，活动时暂停生成
-        self.spawner.set_paused(not is_idle)
+    def cleanup(self):
+        """清理资源"""
+        # 关闭所有漂浮文字窗口
+        self.spawner.close_all()
     
     def start(self):
         """启动应用"""
-        self.setup_tray()
-        self.setup_hotkey()
-        self.setup_idle_detector()
-        
         # 显示启动对话框
         def on_start():
+            # 启动生成器
             self.spawner.start()
         
         start_dialog = StartDialog(on_start)

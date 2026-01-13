@@ -30,14 +30,8 @@ LIFETIME = 7000  # 文字显示时长（毫秒）
 SPAWN_INTERVAL = 1800  # 生成间隔（毫秒）
 FLOAT_SPEED = 40  # 漂浮速度（毫秒）
 
-# 空闲检测设置
-IDLE_THRESHOLD = 60  # 空闲阈值（秒）
-
 # 文本文件路径
 TEXT_FILE = "data/texts.txt"
-
-# 图标文件路径
-ICON_FILE = "icon.png"
 
 # 热键设置
 HOTKEY_EXIT = "alt+s"

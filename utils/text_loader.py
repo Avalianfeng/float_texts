@@ -3,7 +3,25 @@
 从文件或默认列表加载文本
 """
 import os
+import sys
 from config import TEXT_FILE
+
+
+def get_resource_path(relative_path):
+    """
+    获取资源文件的绝对路径
+    支持开发环境和PyInstaller打包后的环境
+    """
+    try:
+        # PyInstaller创建的临时文件夹路径
+        base_path = sys._MEIPASS
+    except Exception:
+        # 开发环境，使用当前文件所在目录
+        base_path = os.path.abspath(os.path.dirname(__file__))
+        # 回到项目根目录
+        base_path = os.path.dirname(os.path.dirname(base_path))
+    
+    return os.path.join(base_path, relative_path)
 
 
 def load_texts():
@@ -24,9 +42,12 @@ def load_texts():
         "Doğaya yakınlaşın, ruh huzur bulsun",
     ]
     
-    if os.path.exists(TEXT_FILE):
+    # 获取资源文件路径
+    text_file_path = get_resource_path(TEXT_FILE)
+    
+    if os.path.exists(text_file_path):
         try:
-            with open(TEXT_FILE, 'r', encoding='utf-8') as f:
+            with open(text_file_path, 'r', encoding='utf-8') as f:
                 texts = []
                 for line in f:
                     line = line.strip()

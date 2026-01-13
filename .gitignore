@@ -1,0 +1,247 @@
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 构建和分发
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虚拟环境
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+virtualenv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 单元测试和覆盖率
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# ============================================
+# PyInstaller
+# ============================================
+*.spec
+!build_exe.spec
+*.manifest
+*.exe
+
+# ============================================
+# PyQt / Qt
+# ============================================
+*.qmlc
+*.jsc
+*.pro.user
+*.pro.user.*
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*bak
+*.qm
+*.prl
+
+# ============================================
+# IDE 和编辑器
+# ============================================
+# Visual Studio Code
+.vscode/
+*.code-workspace
+.history/
+
+# PyCharm / IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Eclipse
+.project
+.pydevproject
+.settings/
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# ============================================
+# 操作系统文件
+# ============================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# 环境变量和配置
+# ============================================
+.env
+.env.local
+.env.*.local
+*.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 配置文件（如果包含敏感信息）
+config.local.py
+settings.local.py
+secrets.py
+
+# ============================================
+# 日志和临时文件
+# ============================================
+*.log
+*.log.*
+logs/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.orig
+*.rej
+*.save
+*.cache
+
+# ============================================
+# 数据库
+# ============================================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# ============================================
+# 项目特定
+# ============================================
+# 图标文件（如果不想提交）
+icon.png
+icon.ico
+icon.icns
+
+# 打包后的可执行文件
+*.exe
+*.app
+*.dmg
+*.pkg
+*.deb
+*.rpm
+
+# 测试输出
+test_output/
+test_results/
+
+# 文档构建
+docs/_build/
+site/
+
+# 其他
+*.zip
+*.tar.gz
+*.rar
+*.7z
