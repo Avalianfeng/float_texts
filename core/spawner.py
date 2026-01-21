@@ -1,62 +1,33 @@
 """
-文字生成器
-管理漂浮文字的生成逻辑
+文字生成调度器
+只负责定时发出生成请求，不管理窗口
 """
-import random
-from PyQt6.QtCore import QTimer
-from ui.float_text import FloatText
-from config import MAX_FLOATS, SPAWN_INTERVAL
-from utils.text_loader import load_texts
+from PyQt6.QtCore import QObject, QTimer, pyqtSignal
+from config import SPAWN_INTERVAL
 
 
-class FloatSpawner:
-    """漂浮文字生成器"""
+class FloatSpawner(QObject):
+    """漂浮文字调度器 - 纯定时器，只负责发出生成请求"""
+    
+    # 生成请求信号
+    spawnRequested = pyqtSignal()
     
     def __init__(self):
-        self.active_floats = []
-        self.paused = False
-        self.texts = load_texts()
-    
-    def set_paused(self, paused):
-        """设置暂停状态"""
-        self.paused = paused
-    
-    def spawn_float(self):
-        """生成一个漂浮文字"""
-        if self.paused:
-            QTimer.singleShot(SPAWN_INTERVAL, self.spawn_float)
-            return
-        
-        # 清理不可见的窗口
-        if len(self.active_floats) >= MAX_FLOATS:
-            self.active_floats[:] = [f for f in self.active_floats if f.isVisible()]
-        
-        # 创建新的漂浮文字
-        text = random.choice(self.texts)
-        float_text = FloatText(text)
-        self.active_floats.append(float_text)
-        
-        # 安排下一次生成
-        QTimer.singleShot(SPAWN_INTERVAL, self.spawn_float)
+        super().__init__()
+        self.timer = QTimer()
+        self.timer.timeout.connect(self._on_timeout)
+        self.timer.setSingleShot(False)  # 重复定时器
     
     def start(self):
-        """开始生成"""
-        self.spawn_float()
+        """启动定时器"""
+        if not self.timer.isActive():
+            self.timer.start(SPAWN_INTERVAL)
     
-    def close_all(self):
-        """关闭所有漂浮文字窗口"""
-        # 停止生成新文字
-        self.paused = True
-        
-        # 关闭所有已显示的窗口
-        for float_text in self.active_floats:
-            try:
-                if float_text.isVisible():
-                    # 使用强制关闭，立即关闭窗口
-                    if hasattr(float_text, 'force_close'):
-                        float_text.force_close()
-                    else:
-                        float_text.close()
-            except:
-                pass
-        self.active_floats.clear()
+    def stop(self):
+        """停止定时器"""
+        if self.timer.isActive():
+            self.timer.stop()
+    
+    def _on_timeout(self):
+        """定时器超时回调 - 只发出信号，不做其他事"""
+        self.spawnRequested.emit()

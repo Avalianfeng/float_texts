@@ -1,101 +1,99 @@
-"Her gün enerji dolu yaşa",
-"Zamanında yemek yiyin, midenizi koruyun",
-"Kendinde potansiyel olduğunu inanın",
-"Yorgun olduğunda dinlenin, zorlanmayın",
-"Meraklı kalın, dünyayı keşfedin",
-"Her deneme, bir gelişimdir",
-"Şu anı yaşayın, zamanı boşa harcamayın",
-"Gülümserek insanlarla karşılaşın, dünyayı ısıtın",
-"Kısaakıllılık bir sınavdır, discouragement olmayın",
-"Havaya çıkarın, güneş iyileştirir",
-"Kendinizle uzlaşın, çok iyisisiniz",
-"Ailelerinize arabaçın, sürekli onları düşünün",
-"Hobi geliştirin, keyif katın",
-"Uyumadan önce telefonu bırakın, sükuneti yaşayın",
-"Sabırlı olun, sürprizler bekliyor, vazgeçmeyin",
-"İyilikli kalın, değişmeyin",
-"Her gün kitap oku, ruhunuz bir sığınak bulsun",
-"Hata yapmak korkutucu değil, deneyim edinin",
-"Arkadaşlarla buluşun, dostluğu geliştirin",
-"Küçük hedefler belirleyin, adım adım gerçekleştirin",
-"Olumlu bir tutum sergileyin, şans gelir",
-"Yalnızlığı yaşayın, kendinizle konuşun",
-"Kendinizi güzelleştirin, ruhunuz neşelenir",
-"Zorluklarla karşılaştığınızda, her zaman size yardım edecek biri vardır",
-"Sevdiklerinizle geçirdiğiniz vakti değerlendirin, sevgiyi gösterin",
-"Çok su içirin, sağlığı koruyun",
-"Gülümsemekle enerjik bir gün başlatın",
-"Hayata şükredin, güzellikler çoktur",
-"Güvenle hayır deyin, sen önemli bir insansın",
-"Adımlarınızı yavaşlatın, manzarayı takdir edin",
-"Kaderi inanın, doğru kişi gelecektir",
-"Spor yapmaya devam edin, beden ve ruh ferah olur",
-"Hayallerinizi kırmayın, mutluluğu bozmayın",
-"Yeni şeyler deneyin, kendinizi tanıyın",
-"İyi uyuyun, yeni bir güne hazırlanın",
-"Başkalarına yardım etmek, kendinizi de mutlu eder",
-"İnançlı kalın, bu en kıymetlisiştir",
-"Her gün kendinizi gözden geçirin, sessizce gelişin",
-"Başkalarının bakışlarına dikkat etmeyin, kendiniz olun",
-"Az ritüel katın, sıradanlık da romantizm olabilir",
-"Çabalarınız boşa gitmeyecek, zaman tanıklık edecek",
-"Mutlu olunan şeyleri başkalarıyla paylaşın",
-"Dinlemeyi öğrenin, başkalarını anlayın",
-"Orta düzeyde meşgul olun, hayat dolu olsun",
-"Anksiyete yapmayın, her şey iyi olacak",
-"Bir demet çiçek alın, romantizm ekleyin",
-"Doğaya yakınlaşın, ruh huzur bulsun",
-"Sezgilerinize güvenin, oldukça doğrudur",
-"Öğrenmeye devam edin, görüş alanınızı genişletin",
-"Kendinizi çok zorlamayın, ara sıra rahatlayın",
-"Isınıcı anıları hatırlayın, ruhunuzu teselli edin",
-"Kendinize karşı nazik olun, hak ediyorsunuz",
-"Kendiniz yemek pişirin, lezzetli ve başarı duygusu yaşayın",
-"Düzenli kalın, ruh huzurlu olsun",
-"Aşkın her şeyi yenebileceğine inanın",
-"Küçük şeyleri kaydedin, anılar biriktirin",
-"Başarısızlık, başarının basamağıdır",
-"Evcil hayvanınızla vakit geçirin, iyileştirici anlar yaşayın",
-"Açık fikirli kalın, farklı görüşleri kabul edin",
-"Yalnız kalma vakti ayırın, sükuneti yaşayın",
-"Geleceğe inanın, iyi çalışın",
-"Bırakmayı öğrenin, zorlama yapmayın",
-"Umutlu kalın, zorlukların içinde daima umut vardır",
-"Küçük şeyler yapın, büyük şeyler birikir",
-"Detayları ihmal etmeyin, mutluluk onlarda saklıdır",
-"Seçimlerinize güvenin, kararlı ilerleyin",
-"Ailelerinizle birlikte yemek yiyin, ısınma yaşayın",
-"Sabırlı kalın, gelişime izin verin",
-"Kendinize sarılın, çok büyük bir insansınız",
-"Meditasyon deneyin, düşüncelerinizi sakinleştirin",
-"İyiliğin döngüye gireceğine inanın, karşılığını alacaksınız",
-"Düşüncelerinizi düzenleyin, hayatınız düzensiz olmasın",
-"Ertelemeyin, yapmak istediğiniz şeyi hemen yapın",
-"Hayatı sevgin, her gün bir hediyedir",
-"Arkadaşlarla derinlemesine konuşun, dostluk derinleşsin",
-"Sabırlı olanlar en sevimlilerdir, sen de onlardan birisin",
-"Ara sıra tembellik yapmak, çok gerekli",
-"Kendinizi takdir edin, parlayın",
-"Meraklı kalın, sürprizleri arayın",
-"Her gün iyi bir şey yapın, ruhunuz güçlenecektir",
-"Kıyaslama mutluluğunuzu çalmayın, kendi ritminiz var",
-"Zamanın her şeyi iyileştireceğine inanın",
-"Sevdiğiniz kişiyle randevu yapın, aşkı tazeleyin",
-"Odaklanın, verimlilik artar",
-"Kendinize ödül verin, ilerlemenizi kutlayın",
-"Çaba göstermek sizi farklı kılar",
-"Kötü duyguları bir geceye kadar bırakmayın, tutumunuzu ayarlayın",
-"Günlük tutun, duygularınızı dışarı vurun",
-"Hayata şükredin, her yerde sürprizler vardır",
-"Doğaya yakınlaşın, beden ve ruh rahatlasın",
-"Kendinizin sevilmeye layık olduğunu ve başkalarını seveceğinizi inanın",
-"Her gün kendinize bir beklenti verin, hayatta umut olsun",
-"Değişime korkmayın, fırsatlar vardır",
-"İnançlı bir şekilde insanlarla karşılaşın, gerçek dostluk kazanacaksınız",
-"Seyahati planlayın, dünyayı görün",
-"Hayallerinize inanın, sizi ileriye taşıyacaklar",
-"Meşguliyet tüm hayatınızı kaplamasın, boş alan bırakın",
-"Kendinizi onaylayın, çabalarınız anlamlıdır",
-"Uyku düzeninizi koruyun, beden en önemli sermayedir",
-"Kısa seyahatler yapın, değerli anılar biriktirin",
-"Daha çok çalışan daha şanslı olduğuna inanın, sen gelişiyorsun"
+"元气满满过每天"
+"按时吃饭，翁小小！"
+"相信自己有潜力"
+"累了就休息"
+"保持好奇，探索世界"
+"每一次尝试，皆成长"
+"享受当下，不负时光"
+"微笑待人，温暖世界"
+"挫折是考验，别气馁"
+"户外走走，阳光治愈"
+"与自己和解，你很棒"
+"给家人打电话，常牵挂"
+"睡前放下手机，享宁静"
+"坚持有惊喜，别放弃"
+"保持善良，期待好事发生"
+"犯错别怕，学经验"
+"定小目标，逐步实现"
+"积极心态，好运来"
+"享受孤独，或者我也可以陪你"
+"打扮自己，精心对待每一天"
+"困难时，我会尽力帮你"
+"多喝水，保持健康，少喝饮料！！"
+"微笑开启元气天"
+"感恩生活，美好多"
+"勇敢说不，你重要"
+"放慢脚步，赏风景"
+"相信缘分，对的人会来"
+"坚持运动，身心爽"
+"别让遗憾扰幸福"
+"尝试新事物，识自己"
+"好好睡觉，没有我打扰就不要熬夜啦"
+"助人亦乐己"
+"保持真诚，最珍贵"
+"每天反思，悄成长"
+"别在意眼光，做自己"
+"加点仪式感，平凡浪漫"
+"努力不白费，时间作证"
+"开心事，分享给我！"
+"学会倾听，多点耐心"
+"适度忙碌，生活充实"
+"别焦虑，一切会好"
+"亲近自然，心平和"
+"相信直觉，和我一样"
+"保持学习，拓眼界"
+"别逼太紧，偶尔放松"
+"记住温暖瞬间，慰心灵"
+"对自己温柔，你值得"
+"保持整洁，心情舒畅"
+"相信爱能胜一切"
+"记录小事，留回忆"
+"失败是成功垫脚石"
+"陪宠物，享治愈时光"
+"保持开放，纳异见"
+"留独处时间，享宁静"
+"相信未来，好好努力"
+"学会放手，不强求"
+"保持乐观，困境有希望"
+"做小事，积大事"
+"别忽略细节，藏幸福"
+"相信选择，坚定前行"
+"和家人吃饭，享温暖"
+"保持耐心，待成长"
+"给自己拥抱，你超棒"
+"尝试冥想，平思绪"
+"相信善良循环，有回报"
+"整理思绪，生活条理"
+"别拖延，想做就行动"
+"热爱生活，每一天都是礼物"
+"深度聊朋友，友情深，比如我"
+"坚持的人最可爱，你是其一"
+"偶尔偷懒，很必要"
+"欣赏自己，闪光芒"
+"保持好奇，寻惊喜"
+"每天做好事，心有力"
+"别让比较偷快乐，你有节奏"
+"保持专注，效率高"
+"给自己奖励，庆进步"
+"努力让你与众不同"
+"坏情绪别过夜，调整心态"
+"写日记，宣泄情绪"
+"感恩生活，处处惊喜"
+"亲近自然，身心松"
+"相信自己值得被爱，也会爱人"
+"每天给自己期待，生活有盼头"
+"别怕改变，有机遇"
+"真诚待人，获真谊"
+"规划旅行，看世界"
+"相信梦想，引前行"
+"别让忙碌占所有，留空白"
+"肯定自己，付出有意义"
+"保持作息，身体是本钱"
+"短途旅行，留珍贵回忆"
+"相信越努力越幸运，你在变好"
+"我在陪着你！"
+"保持轻松，我很耐心"
+"冬天很冷，记得添衣"
+"阳光很暖，心安安"
+"思彤思彤，慧思彤明"
+"翁小小！记得开心！！！"

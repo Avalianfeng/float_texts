@@ -3,7 +3,7 @@
 """
 import random
 from PyQt6.QtWidgets import QWidget, QLabel
-from PyQt6.QtCore import Qt, QTimer, QPropertyAnimation
+from PyQt6.QtCore import Qt, QTimer, QPropertyAnimation, pyqtSignal
 from PyQt6.QtGui import QFont, QColor
 from PyQt6.QtWidgets import QGraphicsDropShadowEffect, QApplication
 from config import DECOR_ICONS, FONT_NAME, FONT_SIZE, LIFETIME, FLOAT_SPEED
@@ -12,6 +12,9 @@ from utils.theme import get_theme
 
 class FloatText(QWidget):
     """漂浮文字窗口"""
+    
+    # 窗口关闭信号
+    closed = pyqtSignal(object)  # 传递自身引用
     
     def __init__(self, text):
         super().__init__()
@@ -31,6 +34,8 @@ class FloatText(QWidget):
             | Qt.WindowType.Tool
         )
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        # 设置关闭时自动删除，确保对象被销毁
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)  # 由 controller 控制
     
     def setup_label(self, text):
         """设置文字标签"""
@@ -111,8 +116,25 @@ class FloatText(QWidget):
         self.anim_out.setDuration(800)
         self.anim_out.setStartValue(1)
         self.anim_out.setEndValue(0)
-        self.anim_out.finished.connect(self.close)
+        self.anim_out.finished.connect(self._do_close)
         self.anim_out.start()
+    
+    def closeEvent(self, event):
+        """窗口关闭事件"""
+        # 发出关闭信号
+        self.closed.emit(self)
+        # 停止所有定时器和动画
+        if hasattr(self, 'timer'):
+            self.timer.stop()
+        if hasattr(self, 'anim_in'):
+            self.anim_in.stop()
+        if hasattr(self, 'anim_out'):
+            self.anim_out.stop()
+        event.accept()
+    
+    def _do_close(self):
+        """执行关闭操作"""
+        self.close()
     
     def force_close(self):
         """强制立即关闭窗口"""
@@ -123,5 +145,5 @@ class FloatText(QWidget):
             self.anim_in.stop()
         if hasattr(self, 'anim_out'):
             self.anim_out.stop()
-        # 立即关闭
+        # 立即关闭（会触发 closeEvent）
         self.close()

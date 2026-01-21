@@ -1,4 +1,6 @@
 PyQt6>=6.0.0
+requests>=2.31.0
 
 # 开发依赖（用于打包）
 # pyinstaller>=5.0.0
+# Pillow>=9.0.0  # 用于图标转换（可选，如果已有icon.ico则不需要）
