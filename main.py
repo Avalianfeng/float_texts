@@ -2,6 +2,13 @@
 主程序入口
 """
 import sys
+import os
+import warnings
+
+# 抑制 libpng 的 ICC profile 警告（不影响功能）
+os.environ.setdefault("QT_LOGGING_RULES", "*.debug=false")
+warnings.filterwarnings("ignore", category=UserWarning, message=".*iCCP.*")
+
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon
 from core.spawner import FloatSpawner
 from core.app_controller import AppController

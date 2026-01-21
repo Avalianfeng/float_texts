@@ -60,7 +60,7 @@ float_words/
 ├── requirements.txt
 ├── icon.png / icon.ico
 ├── data/
-│   ├── texts.txt
+│   ├── texts.txt                #本地文字内容
 │   └── ai_cache/
 ├── core/
 │   ├── app_controller.py        # 生命周期/生成门控/provider 切换

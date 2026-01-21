@@ -81,7 +81,11 @@ class TrayIcon(QSystemTrayIcon):
         icon_path = get_resource_path("icon.png")
         if os.path.exists(icon_path):
             try:
-                self.setIcon(QIcon(icon_path))
+                # 临时抑制 libpng 的 ICC profile 警告（不影响功能）
+                import contextlib
+                from io import StringIO
+                with contextlib.redirect_stderr(StringIO()):
+                    self.setIcon(QIcon(icon_path))
             except Exception as e:
                 print(f"加载图标文件失败: {e}")
                 self.setIcon(create_default_icon())

@@ -22,6 +22,7 @@ from PyQt6.QtWidgets import (
     QCheckBox,
     QComboBox,
     QSpinBox,
+    QPlainTextEdit,
     QPushButton,
     QMessageBox,
 )
@@ -89,6 +90,34 @@ class SettingsDialog(QDialog):
         self.idle_threshold.setSuffix(" 秒")
         form.addRow(QLabel("空闲阈值"), self.idle_threshold)
 
+        # float density（档位）
+        self.float_density = QComboBox()
+        self.float_density.addItems(["超多", "多", "普通", "少"])
+        form.addRow(QLabel("漂浮数量"), self.float_density)
+
+        # float speed（档位）
+        self.float_speed = QComboBox()
+        self.float_speed.addItems(["快", "正常", "慢"])
+        form.addRow(QLabel("漂浮速度"), self.float_speed)
+
+        # salutation（称呼）
+        self.salutation = QLineEdit()
+        self.salutation.setPlaceholderText("例如：小王、阿哲（可为空）")
+        form.addRow(QLabel("称呼"), self.salutation)
+
+        # user custom prompt（自定义提示词）
+        self.user_prompt = QPlainTextEdit()
+        self.user_prompt.setPlaceholderText(
+            "用一句或几句自然语言描述你想要的风格或主题，例如：\n"
+            "“偏学习与专注提醒，少鸡汤。”\n"
+            "“更偏治愈、轻松，适合晚上。”\n"
+            "“多一些喝水、拉伸、护眼的温柔提醒。”\n"
+            "建议长度：20～200 字；不要写太长的段落。\n"
+            "不要包含：网址、广告、敏感内容、极端/攻击性内容。"
+        )
+        self.user_prompt.setMaximumBlockCount(20)
+        form.addRow(QLabel("自定义提示词"), self.user_prompt)
+
         # buttons
         btn_row = QHBoxLayout()
         btn_row.addStretch(1)
@@ -117,6 +146,10 @@ class SettingsDialog(QDialog):
         self.city.setText(app_settings.get_city())
         self.idle_only.setChecked(app_settings.get_idle_only())
         self.idle_threshold.setValue(app_settings.get_idle_threshold_seconds())
+        self.float_density.setCurrentText(app_settings.get_float_density_label())
+        self.float_speed.setCurrentText(app_settings.get_float_speed_label())
+        self.salutation.setText(app_settings.get_salutation())
+        self.user_prompt.setPlainText(app_settings.get_user_custom_prompt())
 
     def _on_save(self):
         changed: List[str] = []
@@ -154,6 +187,30 @@ class SettingsDialog(QDialog):
         if app_settings.get_idle_threshold_seconds() != th:
             app_settings.set_idle_threshold_seconds(th)
             changed.append(app_settings.Keys.IDLE_THRESHOLD_SECONDS)
+
+        # float density
+        density = self.float_density.currentText().strip()
+        if app_settings.get_float_density_label() != density:
+            app_settings.set_float_density_label(density)
+            changed.append(app_settings.Keys.UI_FLOAT_DENSITY)
+
+        # float speed
+        speed = self.float_speed.currentText().strip()
+        if app_settings.get_float_speed_label() != speed:
+            app_settings.set_float_speed_label(speed)
+            changed.append(app_settings.Keys.UI_FLOAT_SPEED)
+
+        # salutation
+        salutation = (self.salutation.text() or "").strip()
+        if app_settings.get_salutation() != salutation:
+            app_settings.set_salutation(salutation)
+            changed.append(app_settings.Keys.PROMPT_SALUTATION)
+
+        # user custom prompt
+        user_prompt = (self.user_prompt.toPlainText() or "").strip()
+        if app_settings.get_user_custom_prompt() != user_prompt:
+            app_settings.set_user_custom_prompt(user_prompt)
+            changed.append(app_settings.Keys.PROMPT_USER_HINT)
 
         # 轻量校验提示：启用 AI 且使用 ai/auto 时，没有 key（env+settings 都为空）
         env_key = (os.getenv("DEEPSEEK_API_KEY", "") or "").strip()

@@ -30,6 +30,10 @@ class Keys:
     CONTEXT_LOCATION_MODE = "context/location_mode"  # manual/ip
     IDLE_ENABLED = "idle/enabled"
     IDLE_THRESHOLD_SECONDS = "idle/threshold_seconds"
+    UI_FLOAT_DENSITY = "ui/float_density"  # 超多/多/普通/少
+    UI_FLOAT_SPEED = "ui/float_speed"  # 快/正常/慢
+    PROMPT_SALUTATION = "prompt/salutation"
+    PROMPT_USER_HINT = "prompt/user_hint"
 
 
 def _qs() -> QSettings:
@@ -134,4 +138,93 @@ def get_idle_threshold_seconds() -> int:
 
 def set_idle_threshold_seconds(v: int) -> None:
     set_value(Keys.IDLE_THRESHOLD_SECONDS, int(v))
+
+
+# -------- UI 档位：数量/速度 --------
+
+
+_DENSITY_TO_MAX_FLOATS = {
+    "超多": 30,
+    "多": 15,
+    "普通": 8,
+    "少": 3,
+}
+
+_SPEED_TO_MS = {
+    "快": 25,
+    "正常": 40,
+    "慢": 60,
+}
+
+
+def get_float_density_label() -> str:
+    """漂浮数量档位（中文）"""
+    default_max = int(getattr(_config, "MAX_FLOATS", 6))
+    # 用默认 max_floats 推断一个最接近的档位
+    if default_max >= 15:
+        default_label = "超多"
+    elif default_max >= 8:
+        default_label = "多"
+    elif default_max >= 4:
+        default_label = "普通"
+    else:
+        default_label = "少"
+
+    v = get_str(Keys.UI_FLOAT_DENSITY, default_label).strip()
+    return v if v in _DENSITY_TO_MAX_FLOATS else default_label
+
+
+def set_float_density_label(v: str) -> None:
+    set_value(Keys.UI_FLOAT_DENSITY, (v or "").strip())
+
+
+def get_max_floats() -> int:
+    """将档位映射为窗口上限"""
+    label = get_float_density_label()
+    return int(_DENSITY_TO_MAX_FLOATS.get(label, int(getattr(_config, "MAX_FLOATS", 6))))
+
+
+def get_float_speed_label() -> str:
+    """漂浮速度档位（中文）"""
+    default_ms = int(getattr(_config, "FLOAT_SPEED", 40))
+    if default_ms <= 30:
+        default_label = "快"
+    elif default_ms <= 50:
+        default_label = "正常"
+    else:
+        default_label = "慢"
+
+    v = get_str(Keys.UI_FLOAT_SPEED, default_label).strip()
+    return v if v in _SPEED_TO_MS else default_label
+
+
+def set_float_speed_label(v: str) -> None:
+    set_value(Keys.UI_FLOAT_SPEED, (v or "").strip())
+
+
+def get_float_speed_ms() -> int:
+    """将档位映射为 QTimer 间隔（ms）"""
+    label = get_float_speed_label()
+    return int(_SPEED_TO_MS.get(label, int(getattr(_config, "FLOAT_SPEED", 40))))
+
+
+# -------- Prompt 相关：称呼 & 自定义提示词 --------
+
+
+def get_salutation() -> str:
+    """称呼，如“小王”、“阿哲”等，可为空"""
+    return get_str(Keys.PROMPT_SALUTATION, "").strip()
+
+
+def set_salutation(v: str) -> None:
+    set_value(Keys.PROMPT_SALUTATION, (v or "").strip())
+
+
+def get_user_custom_prompt() -> str:
+    """用户自定义提示词，可多句自然语言"""
+    return get_str(Keys.PROMPT_USER_HINT, "").strip()
+
+
+def set_user_custom_prompt(v: str) -> None:
+    set_value(Keys.PROMPT_USER_HINT, (v or "").strip())
 

@@ -45,7 +45,7 @@ AI_API_BASE = "https://api.deepseek.com"  # 不带 /v1，后续拼接
 AI_API_KEY = _os.getenv("DEEPSEEK_API_KEY", "")
 AI_MODEL = "deepseek-chat"
 AI_TEMPERATURE = 0.8
-AI_ITEMS_PER_DAY = 10  # 每天生成多少条
+AI_ITEMS_PER_DAY = 50  # 每天生成多少条
 AI_CACHE_DIR = "data/ai_cache"
 AI_TIMEOUT_SECONDS = 60
 AI_FAILOVER_TO_LOCAL = True  # AI 失败时是否回退到本地文本
@@ -61,6 +61,10 @@ AI_PROMPT_TEMPLATE = """
 - 不包含敏感/政治/暴力/色情内容
 - 不要出现网址、@、#、表情符号
 - 不要重复句子
+- 如果提供了称呼（salutation），可以在少部分句子里轻柔地使用这个称呼，但不要过度重复。
+
+用户自定义偏好（可能为空）：
+- {user_custom_prompt}
 
 上下文（可能为空）：
 - 日期：{date}
@@ -68,6 +72,7 @@ AI_PROMPT_TEMPLATE = """
 - 时间段：{time_of_day}
 - 城市：{city}
 - 天气：{weather}
+- 称呼：{salutation}
 
 请返回 JSON，结构如下：
 {{

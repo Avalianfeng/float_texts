@@ -233,6 +233,25 @@ class DeepSeekTextProvider(BaseTextProvider):
                 print(f"[Context] 获取天气失败: {e}")
             weather = ""
 
+        # 用户自定义：称呼 & 提示词
+        try:
+            salutation = app_settings.get_salutation()
+        except Exception as e:
+            if DEBUG:
+                print(f"[Context] 获取称呼失败: {e}")
+            salutation = ""
+
+        try:
+            user_custom = app_settings.get_user_custom_prompt()
+        except Exception as e:
+            if DEBUG:
+                print(f"[Context] 获取自定义提示词失败: {e}")
+            user_custom = ""
+
+        # 简单裁剪自定义提示词长度，避免 prompt 过长
+        if user_custom and len(user_custom) > 400:
+            user_custom = user_custom[:400]
+
         # 保存上下文到实例（用于写入缓存）
         self._context = {
             "date": date_str,
@@ -240,6 +259,8 @@ class DeepSeekTextProvider(BaseTextProvider):
             "time_of_day": time_of_day,
             "city": city,
             "weather": weather,
+            "salutation": salutation,
+            "user_custom_prompt": user_custom,
         }
 
         return AI_PROMPT_TEMPLATE.format(
@@ -249,6 +270,8 @@ class DeepSeekTextProvider(BaseTextProvider):
             time_of_day=time_of_day,
             city=city,
             weather=weather,
+            salutation=salutation,
+            user_custom_prompt=user_custom,
         )
 
     def _generate_from_ai(self) -> Optional[Dict[str, Any]]:

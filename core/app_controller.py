@@ -16,12 +16,7 @@ from core.text_provider.deepseek_provider import DeepSeekTextProvider
 from ui.float_text import FloatText
 from utils.text_loader import load_texts
 from config import (
-    MAX_FLOATS,
-    IDLE_ONLY,
-    IDLE_THRESHOLD_SECONDS,
     DEBUG,
-    TEXT_SOURCE,
-    AI_ENABLED,
     AI_FAILOVER_TO_LOCAL,
 )
 from core import settings as app_settings
@@ -55,6 +50,7 @@ class AppController(QObject):
         # 设置（运行时优先使用 settings，config 作为默认兜底）
         self.idle_only = app_settings.get_idle_only()
         self.idle_threshold_seconds = app_settings.get_idle_threshold_seconds()
+        self.max_floats = app_settings.get_max_floats()
         
         # 文本 Provider 管理
         self.local_provider: BaseTextProvider = LocalTextProvider()
@@ -191,6 +187,16 @@ class AppController(QObject):
             self.idle_threshold_seconds = app_settings.get_idle_threshold_seconds()
             if DEBUG:
                 print(f"[Settings] idle_threshold_seconds={self.idle_threshold_seconds}")
+
+        if app_settings.Keys.UI_FLOAT_DENSITY in keys:
+            self.max_floats = app_settings.get_max_floats()
+            if DEBUG:
+                print(f"[Settings] max_floats={self.max_floats}")
+
+        if app_settings.Keys.UI_FLOAT_SPEED in keys:
+            # 速度由 FloatText 在创建时读取 settings；这里给提示即可
+            if DEBUG:
+                print(f"[Settings] float_speed={app_settings.get_float_speed_label()} ({app_settings.get_float_speed_ms()}ms)")
 
         if app_settings.Keys.AI_ENABLED in keys:
             self.set_ai_enabled(app_settings.get_ai_enabled())
@@ -331,9 +337,9 @@ class AppController(QObject):
         
         # 检查窗口数量限制
         self._cleanup_invisible_windows()
-        if len(self.float_windows) >= MAX_FLOATS:
+        if len(self.float_windows) >= self.max_floats:
             if DEBUG:
-                print(f"[DEBUG] 窗口数量已达上限 {MAX_FLOATS}, skip spawn")
+                print(f"[DEBUG] 窗口数量已达上限 {self.max_floats}, skip spawn")
             return
         
         # 获取下一个文本并生成窗口

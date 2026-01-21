@@ -6,8 +6,9 @@ from PyQt6.QtWidgets import QWidget, QLabel
 from PyQt6.QtCore import Qt, QTimer, QPropertyAnimation, pyqtSignal
 from PyQt6.QtGui import QFont, QColor
 from PyQt6.QtWidgets import QGraphicsDropShadowEffect, QApplication
-from config import DECOR_ICONS, FONT_NAME, FONT_SIZE, LIFETIME, FLOAT_SPEED
+from config import DECOR_ICONS, FONT_NAME, FONT_SIZE, LIFETIME
 from utils.theme import get_theme
+from core import settings as app_settings
 
 
 class FloatText(QWidget):
@@ -98,7 +99,8 @@ class FloatText(QWidget):
         # 漂浮定时器
         self.timer = QTimer()
         self.timer.timeout.connect(self.float_up)
-        self.timer.start(FLOAT_SPEED)
+        # 速度从 settings 读取（档位映射为 ms），新窗口立即生效
+        self.timer.start(app_settings.get_float_speed_ms())
         
         # 淡出定时器
         QTimer.singleShot(LIFETIME, self.fade_out)

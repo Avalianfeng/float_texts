@@ -225,9 +225,9 @@ logs/
 # 项目特定
 # ============================================
 # 图标文件（如果不想提交）
-icon.png
-icon.ico
-icon.icns
+#icon.png
+#icon.ico
+#icon.icns
 
 # 打包后的可执行文件
 *.exe
@@ -244,6 +244,12 @@ test_results/
 # 文档
 docs/
 site/
+
+# 数据目录（用户自定义内容和运行时缓存）
+data/texts.txt
+data/ai_cache/
+data/*.json
+data/*.txt
 
 # 其他
 *.zip
