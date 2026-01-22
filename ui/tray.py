@@ -2,29 +2,12 @@
 系统托盘组件
 """
 import os
-import sys
 from PyQt6.QtWidgets import QSystemTrayIcon, QMenu
 from PyQt6.QtGui import QIcon, QAction, QPixmap, QPainter, QColor
 from PyQt6.QtCore import Qt
 from ui.settings_dialog import SettingsDialog
 from core import settings as app_settings
-
-
-def get_resource_path(relative_path):
-    """
-    获取资源文件的绝对路径
-    支持开发环境和PyInstaller打包后的环境
-    """
-    try:
-        # PyInstaller创建的临时文件夹路径
-        base_path = sys._MEIPASS
-    except Exception:
-        # 开发环境，使用当前文件所在目录
-        base_path = os.path.abspath(os.path.dirname(__file__))
-        # 回到项目根目录
-        base_path = os.path.dirname(base_path)
-    
-    return os.path.join(base_path, relative_path)
+from utils.resources import get_icon_path
 
 
 def create_default_icon():
@@ -55,6 +38,7 @@ class TrayIcon(QSystemTrayIcon):
         super().__init__()
         self.controller = controller
         self._settings_dialog: SettingsDialog | None = None
+        self._panel = None  # ControlPanel 实例
         
         # 设置图标
         self._setup_icon()
@@ -77,8 +61,11 @@ class TrayIcon(QSystemTrayIcon):
             print("警告: 系统不支持系统托盘")
             return
         
-        # 尝试加载图标文件
-        icon_path = get_resource_path("icon.png")
+        # 尝试加载图标文件（优先 .ico，其次 .png）
+        icon_path, fallback_path = get_icon_path()
+        icon_loaded = False
+        
+        # 优先尝试 .ico
         if os.path.exists(icon_path):
             try:
                 # 临时抑制 libpng 的 ICC profile 警告（不影响功能）
@@ -86,11 +73,23 @@ class TrayIcon(QSystemTrayIcon):
                 from io import StringIO
                 with contextlib.redirect_stderr(StringIO()):
                     self.setIcon(QIcon(icon_path))
+                    icon_loaded = True
             except Exception as e:
                 print(f"加载图标文件失败: {e}")
-                self.setIcon(create_default_icon())
-        else:
-            # 使用默认图标
+        
+        # 如果 .ico 失败，尝试 .png
+        if not icon_loaded and os.path.exists(fallback_path) and fallback_path != icon_path:
+            try:
+                import contextlib
+                from io import StringIO
+                with contextlib.redirect_stderr(StringIO()):
+                    self.setIcon(QIcon(fallback_path))
+                    icon_loaded = True
+            except Exception as e:
+                print(f"加载备用图标文件失败: {e}")
+        
+        # 如果都失败，使用默认图标
+        if not icon_loaded:
             self.setIcon(create_default_icon())
         
         self.setVisible(True)
@@ -131,6 +130,14 @@ class TrayIcon(QSystemTrayIcon):
         self.refresh_ai_action.triggered.connect(self._on_refresh_ai)
         menu.addAction(self.refresh_ai_action)
         
+        # 分隔线
+        menu.addSeparator()
+        
+        # 打开面板
+        self.open_panel_action = QAction("打开面板", self)
+        self.open_panel_action.triggered.connect(self._open_panel)
+        menu.addAction(self.open_panel_action)
+        
         # 设置
         self.settings_action = QAction("设置…", self)
         self.settings_action.triggered.connect(self._open_settings)
@@ -145,6 +152,18 @@ class TrayIcon(QSystemTrayIcon):
         menu.addAction(exit_action)
         
         self.setContextMenu(menu)
+    
+    def set_panel(self, panel):
+        """设置控制面板实例"""
+        self._panel = panel
+    
+    def _open_panel(self):
+        """打开控制面板（首页）"""
+        if self._panel:
+            self._panel.show_home()
+        else:
+            # 如果没有面板，回退到打开设置对话框
+            self._open_settings()
     
     def _on_idle_only_toggled(self, checked: bool):
         """空闲显示开关切换"""
@@ -168,18 +187,39 @@ class TrayIcon(QSystemTrayIcon):
         self.controller.refresh_today_ai()
 
     def _open_settings(self):
-        """打开设置窗口（单实例）"""
-        if self._settings_dialog is None:
-            self._settings_dialog = SettingsDialog()
-            self._settings_dialog.settingsChanged.connect(self._on_settings_changed)
-
-        # 阻塞式更符合设置窗口习惯
-        self._settings_dialog.exec()
+        """打开设置窗口"""
+        # 优先使用控制面板
+        if self._panel:
+            self._panel.show_settings()
+        else:
+            # 回退到旧版设置对话框
+            if self._settings_dialog is None:
+                self._settings_dialog = SettingsDialog()
+                self._settings_dialog.settingsChanged.connect(self._on_settings_changed)
+            self._settings_dialog.exec()
 
     def _on_settings_changed(self, changed_keys: list):
         """设置保存回调：让 controller 应用并提示必要的刷新"""
+        from PyQt6.QtWidgets import QMessageBox
+        from core import settings as app_settings
+        
         try:
             self.controller.apply_settings(changed_keys)
+            
+            # 如果城市或天气设置变更，提示用户刷新今日 AI 文本
+            keys_set = set(changed_keys)
+            context_changed = (
+                app_settings.Keys.CONTEXT_CITY in keys_set or
+                app_settings.Keys.CONTEXT_WEATHER_ENABLED in keys_set
+            )
+            
+            if context_changed:
+                QMessageBox.information(
+                    self.parent(),
+                    "提示",
+                    "城市或天气设置已更新，但今日 AI 文本缓存不会自动刷新。\n"
+                    "如需立即生效，请点击“刷新今日 AI 文本”菜单项。",
+                )
         except Exception as e:
             print(f"[Settings] 应用设置失败: {e}")
     

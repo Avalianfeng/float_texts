@@ -101,9 +101,26 @@ python tools/test_deepseek.py
 - 适当增大 `config.py` 的 `AI_TIMEOUT_SECONDS`
 - 先把 `AI_ITEMS_PER_DAY` 调小验证链路，再逐步调回
 
-## 打包说明（当前仓库未提供脚本/Spec）
+## 打包说明
 
-本仓库当前 **没有**内置 `PyInstaller .spec` 或 `build.bat/build.sh` 脚本；如需打包我可以再补一套“最小可用的 PyInstaller 配置”（包含数据文件与图标）。
+项目已包含完整的打包配置，详见 [README_BUILD.md](README_BUILD.md)。
+
+**快速打包：**
+
+```bash
+# 1. 创建并激活虚拟环境
+python -m venv .venv
+.\.venv\Scripts\activate
+
+# 2. 安装依赖
+pip install -r requirements.txt
+pip install pyinstaller
+
+# 3. 执行打包
+build.bat
+```
+
+打包后的可执行文件位于 `dist/FloatWords.exe`，可直接分发给 Windows 用户使用。
 
 ## 许可证
 

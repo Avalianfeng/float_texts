@@ -3,25 +3,8 @@
 从文件或默认列表加载文本
 """
 import os
-import sys
 from config import TEXT_FILE
-
-
-def get_resource_path(relative_path):
-    """
-    获取资源文件的绝对路径
-    支持开发环境和PyInstaller打包后的环境
-    """
-    try:
-        # PyInstaller创建的临时文件夹路径
-        base_path = sys._MEIPASS
-    except Exception:
-        # 开发环境，使用当前文件所在目录
-        base_path = os.path.abspath(os.path.dirname(__file__))
-        # 回到项目根目录
-        base_path = os.path.dirname(os.path.dirname(base_path))
-
-    return os.path.join(base_path, relative_path)
+from utils.resources import get_resource_path
 
 
 def load_texts():

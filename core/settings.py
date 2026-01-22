@@ -28,10 +28,12 @@ class Keys:
     AI_DEEPSEEK_API_KEY = "ai/deepseek_api_key"
     CONTEXT_CITY = "context/city"
     CONTEXT_LOCATION_MODE = "context/location_mode"  # manual/ip
+    CONTEXT_WEATHER_ENABLED = "context/weather_enabled"
     IDLE_ENABLED = "idle/enabled"
     IDLE_THRESHOLD_SECONDS = "idle/threshold_seconds"
     UI_FLOAT_DENSITY = "ui/float_density"  # 超多/多/普通/少
     UI_FLOAT_SPEED = "ui/float_speed"  # 快/正常/慢
+    UI_SHOW_PANEL_ON_STARTUP = "ui/show_panel_on_startup"  # 启动时显示控制面板
     PROMPT_SALUTATION = "prompt/salutation"
     PROMPT_USER_HINT = "prompt/user_hint"
 
@@ -123,6 +125,15 @@ def set_location_mode(v: str) -> None:
     set_value(Keys.CONTEXT_LOCATION_MODE, (v or "").lower())
 
 
+def get_weather_enabled() -> bool:
+    """是否启用天气上下文（Open-Meteo，无需 API Key）"""
+    return get_bool(Keys.CONTEXT_WEATHER_ENABLED, bool(getattr(_config, "WEATHER_ENABLED", False)))
+
+
+def set_weather_enabled(v: bool) -> None:
+    set_value(Keys.CONTEXT_WEATHER_ENABLED, bool(v))
+
+
 def get_idle_only() -> bool:
     return get_bool(Keys.IDLE_ENABLED, bool(getattr(_config, "IDLE_ONLY", True)))
 
@@ -206,6 +217,16 @@ def get_float_speed_ms() -> int:
     """将档位映射为 QTimer 间隔（ms）"""
     label = get_float_speed_label()
     return int(_SPEED_TO_MS.get(label, int(getattr(_config, "FLOAT_SPEED", 40))))
+
+
+def get_show_panel_on_startup() -> bool:
+    """是否在启动时显示控制面板"""
+    return get_bool(Keys.UI_SHOW_PANEL_ON_STARTUP, True)  # 默认 True
+
+
+def set_show_panel_on_startup(v: bool) -> None:
+    """设置是否在启动时显示控制面板"""
+    set_value(Keys.UI_SHOW_PANEL_ON_STARTUP, bool(v))
 
 
 # -------- Prompt 相关：称呼 & 自定义提示词 --------

@@ -58,6 +58,9 @@ AI_PROMPT_TEMPLATE = """
 约束：
 - 每条 text 5~22 个汉字左右，尽量不超过 26 字
 - 避免命令式、避免说教、避免夸张鸡汤
+- 如果日期是节日，可以适当增加节日的氛围，比如“元宵节快乐”、“春节快乐”、“中秋节快乐”等。
+- 如果日期是周末，可以适当增加周末的氛围，比如“周末愉快”、“周末快乐”等。
+- 如果日期是工作日，可以适当提醒休息，比如“工作辛苦了”、“休息一下”，“记得喝热水”等。
 - 不包含敏感/政治/暴力/色情内容
 - 不要出现网址、@、#、表情符号
 - 不要重复句子
@@ -85,6 +88,11 @@ AI_PROMPT_TEMPLATE = """
 
 # 文本文件路径
 TEXT_FILE = "data/texts.txt"
+
+# 天气上下文设置
+WEATHER_ENABLED = False
+WEATHER_PROVIDER = "open-meteo"  # open-meteo / nominatim
+WEATHER_TIMEOUT_SECONDS = 10  # 天气 API 超时（秒）
 
 # 热键设置
 HOTKEY_EXIT = "alt+s"

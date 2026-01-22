@@ -80,6 +80,10 @@ class SettingsDialog(QDialog):
         self.city.setPlaceholderText("可为空：不提供城市上下文")
         form.addRow(QLabel("城市 City"), self.city)
 
+        # weather enabled
+        self.weather_enabled = QCheckBox("启用天气上下文（Open-Meteo，无需 API Key）")
+        form.addRow(QLabel("天气"), self.weather_enabled)
+
         # idle only
         self.idle_only = QCheckBox("仅空闲时显示")
         form.addRow(QLabel("空闲检测"), self.idle_only)
@@ -144,6 +148,7 @@ class SettingsDialog(QDialog):
         self.text_source.setCurrentText(app_settings.get_text_source())
         self.api_key.setText(app_settings.get_deepseek_api_key())
         self.city.setText(app_settings.get_city())
+        self.weather_enabled.setChecked(app_settings.get_weather_enabled())
         self.idle_only.setChecked(app_settings.get_idle_only())
         self.idle_threshold.setValue(app_settings.get_idle_threshold_seconds())
         self.float_density.setCurrentText(app_settings.get_float_density_label())
@@ -176,6 +181,11 @@ class SettingsDialog(QDialog):
         if app_settings.get_city() != city:
             app_settings.set_city(city)
             changed.append(app_settings.Keys.CONTEXT_CITY)
+
+        # weather enabled
+        if app_settings.get_weather_enabled() != self.weather_enabled.isChecked():
+            app_settings.set_weather_enabled(self.weather_enabled.isChecked())
+            changed.append(app_settings.Keys.CONTEXT_WEATHER_ENABLED)
 
         # idle only
         if app_settings.get_idle_only() != self.idle_only.isChecked():

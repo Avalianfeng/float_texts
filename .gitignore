@@ -248,6 +248,7 @@ site/
 # 数据目录（用户自定义内容和运行时缓存）
 data/texts.txt
 data/ai_cache/
+data/context_cache/
 data/*.json
 data/*.txt
 
@@ -259,3 +260,6 @@ data/*.txt
 
 # 临时网络测试脚本（不提交）
 tools/test_deepseek.py
+build.bat
+README_BUILD.md
+CHECKLIST_BEFORE_BUILD.md
